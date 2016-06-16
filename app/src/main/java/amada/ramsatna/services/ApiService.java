@@ -226,7 +226,7 @@ public class ApiService {
         final MediaType MEDIA_TYPE_MARKDOWN
                 = MediaType.parse("application/x-www-form-urlencoded");
 
-        String parameters = "word=" + word + "&meaning=" + meaning + "$has_audio=" + has_audio;
+        String parameters = "word=" + word + "&meaning=" + meaning + "&has_audio=" + has_audio;
 
 
         Request request = new Request.Builder()

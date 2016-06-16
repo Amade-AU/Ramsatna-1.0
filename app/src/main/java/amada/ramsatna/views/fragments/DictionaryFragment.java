@@ -110,7 +110,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
                 new AlertDialog.Builder(getActivity())
                         .setMessage("هل تريد أن نضيف معنى " + searchBox.getQuery().toString() + "؟")
                         .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton("نعم ", new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 ApiService apiService = new ApiService(getActivity());
@@ -118,7 +118,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
                                 searchBox.setQuery("", true);
                             }
                         })
-                        .setNegativeButton(android.R.string.no, null).show();
+                        .setNegativeButton("لا", null).show();
             }
         });
 

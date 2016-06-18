@@ -106,7 +106,6 @@ public class HomeFragment extends Fragment {
         mBottomLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mScrollView.fullScroll(ScrollView.FOCUS_UP);
             }
 

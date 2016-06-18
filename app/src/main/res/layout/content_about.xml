@@ -51,6 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:gravity="center_horizontal"
                 android:layout_marginBottom="16dp"
                 android:text="@string/about_page_title"
                 android:textColor="#800040" />
@@ -66,7 +67,7 @@
                     android:id="@+id/credit_title_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:gravity="center"
                     android:text="@string/credit_title_1"
                     android:textColor="@color/navigationBarColor"
                     android:textStyle="bold" />
@@ -75,7 +76,7 @@
                     android:id="@+id/credit_title_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:gravity="center"
                     android:text="@string/credit_title_2"
                     android:textColor="@color/navigationBarColor"
                     android:textStyle="bold" />
@@ -84,7 +85,7 @@
                     android:id="@+id/credit_title_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
                     android:text="@string/credit_title_3"
                     android:textColor="@color/navigationBarColor"
                     android:textStyle="bold" />
@@ -95,8 +96,8 @@
                     android:layout_height="wrap_content"
                     android:singleLine="false"
                     android:text="@string/credit_title_4"
-                    android:textAlignment="center"
                     android:textColor="@color/navigationBarColor"
+                    android:gravity="center"
                     android:textStyle="bold" />
 
             </LinearLayout>

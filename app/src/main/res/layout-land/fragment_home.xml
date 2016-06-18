@@ -186,8 +186,6 @@
                         android:textColor="@color/windowBackground"
                         android:textStyle="bold"
                         />
-
-
                 </FrameLayout>
 
 

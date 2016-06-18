@@ -46,7 +46,7 @@ import amada.ramsatna.views.MainActivity;
  */
 public class AudioService {
 
-    private static final String AUDIO_ENDPOINT = "http://3on.ae/clients/DM/audio/";
+    private static final String AUDIO_ENDPOINT = "https://3on.ae/clients/DM/audio/";
     private static final String TAG = "AudioService";
     private URL url;
     private MediaPlayer mp;

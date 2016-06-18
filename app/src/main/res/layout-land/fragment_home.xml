@@ -18,8 +18,9 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:layout_gravity="center_horizontal"
                 android:src="@drawable/homepage_logo" />
 
 
@@ -127,18 +128,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:weightSum="2"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <FrameLayout
-                    android:padding="5dp"
                     android:layout_width="match_parent"
+                    android:padding="5dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/image_right"
                         android:layout_width="match_parent"
-                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
                         android:layout_height="190dp"
                         tools:src="@drawable/homepage_logo" />
 
@@ -148,9 +151,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:background="#AA000000"
+                        android:gravity="center"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:gravity="center"
                         android:textColor="@color/windowBackground"
                         android:textStyle="bold"
                         tools:text="fgdfhfdhdsfhdfhdsfhfdhdfhfdhdsfhfdshds" />
@@ -158,18 +161,18 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:padding="5dp"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
+                    android:padding="5dp"
                     android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/image_left"
                         android:layout_width="match_parent"
                         android:layout_height="190dp"
-                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
                         tools:src="@drawable/homepage_logo" />
-
 
                     <TextView
                         android:id="@+id/rightImageViewText"
@@ -179,6 +182,7 @@
                         android:background="#AA000000"
                         android:ellipsize="end"
                         android:maxLines="2"
+                        android:gravity="center"
                         android:textColor="@color/windowBackground"
                         android:textStyle="bold"
                         />

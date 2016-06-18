@@ -38,9 +38,9 @@ import okhttp3.Response;
 public class ApiService {
     private static String res;
     private static String version;
-    private static final String ADD_WORD_ENDPOINT = "http://3on.ae/clients/DM/API/add.php";
-    private static final String DOWNLOAD_FILE_ENDPOINT = "http://3on.ae/clients/DM/publish/dictionary.txt";
-    private static final String DATABASE_VERSION_ENDPOINT_ = "http://3on.ae/clients/DM/dictionary/version.txt";
+    private static final String ADD_WORD_ENDPOINT = "https://3on.ae/clients/DM/API/add.php";
+    private static final String DOWNLOAD_FILE_ENDPOINT = "https://3on.ae/clients/DM/publish/dictionary.txt";
+    private static final String DATABASE_VERSION_ENDPOINT_ = "https://3on.ae/clients/DM/dictionary/version.txt";
     private String TAG = getClass().getSimpleName();
     private final OkHttpClient client = new OkHttpClient();
     private Context mCtx;

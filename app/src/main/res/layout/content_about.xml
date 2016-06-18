@@ -55,11 +55,12 @@
                 android:text="@string/about_page_title"
                 android:textColor="#800040" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/credit_title_1"
@@ -70,91 +71,21 @@
                     android:textColor="@color/navigationBarColor"
                     android:textStyle="bold" />
 
-
-                <TextView
-                    android:id="@+id/credit_text_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/credit_title_1"
-                    android:singleLine="false"
-                    android:text="السيد/ خالد بن زايد – مساعد مدير العام – قطاع الاتصال والمجتمع"
-                    android:textAlignment="center"
-                    android:textColor="@color/navigationBarColor"
-                    android:textStyle="bold" />
-
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
                 <TextView
                     android:id="@+id/credit_title_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="تجميع المادة:"
+                    android:text="@string/credit_title_2"
                     android:textColor="@color/navigationBarColor"
                     android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/credit_text_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/credit_title_2"
-                    android:singleLine="false"
-                    android:text="موظفوا إدارة مركز بلدية دبي و إدارة المعرفة - قسم التبادل المعرفي"
-                    android:textAlignment="center"
-                    android:textColor="@color/navigationBarColor"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
 
                 <TextView
                     android:id="@+id/credit_title_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text=" الاشراف العام:"
-                    android:textColor="@color/navigationBarColor"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/credit_text_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerInParent="true"
-                    android:layout_toLeftOf="@id/credit_title_3"
-                    android:singleLine="false"
-                    android:text="مريم الخمري"
-                    android:textAlignment="center"
-                    android:textColor="@color/navigationBarColor"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/credit_title_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="التدقيق و الاعداد الالكتروني :"
+                    android:text="@string/credit_title_3"
                     android:textColor="@color/navigationBarColor"
                     android:textStyle="bold" />
 
@@ -162,14 +93,13 @@
                     android:id="@+id/credit_text_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/credit_title_4"
                     android:singleLine="false"
-                    android:text="إدارة المعرفة - قسم التبادل المعرفي"
+                    android:text="@string/credit_title_4"
                     android:textAlignment="center"
                     android:textColor="@color/navigationBarColor"
                     android:textStyle="bold" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
 
             <Button

@@ -24,7 +24,7 @@ import amada.ramsatna.views.MainActivity;
  */
 public class HomeApiService {
 
-    private static final String CONFINGS_ENDPOINT = "http://3on.ae/clients/DM/configs.json";
+    private static final String CONFINGS_ENDPOINT = "https://3on.ae/clients/DM/configs.json";
     private static final String TAG = "HomeApiService";
 
     private URL url;

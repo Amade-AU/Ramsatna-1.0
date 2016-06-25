@@ -99,9 +99,6 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
         mAddWord = (FloatingActionButton) view.findViewById(R.id.add);
 
 
-
-
-
         mAddbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,7 +216,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
                             new ApiService.DownloadData(new ApiService.DownloadData.ReturnData() {
                                 @Override
                                 public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
-
+                                    new Populate().execute();
                                 }
                             }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } else {
@@ -245,6 +242,9 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
             }
         });
 
+        new Populate().execute();
+        adaptor.notifyDataSetChanged();
+
         return view;
     }
 
@@ -265,8 +265,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
     @Override
     public void onResume() {
         super.onResume();
-        new Populate().execute();
-        adaptor.notifyDataSetChanged();
+
     }
 
     public class Populate extends AsyncTask<Void, Void, Void> {

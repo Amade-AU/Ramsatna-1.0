@@ -65,7 +65,7 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     AudioService audioService = new AudioService();
-                  //  audioService.getAudio(word.getRecord_id(), DetailsActivity.this);
+                    //  audioService.getAudio(word.getRecord_id(), DetailsActivity.this);
                     //audioService.playAudio("http://3on.ae/clients/DM/audio/315.caf", DetailsActivity.this);
                 }
             });

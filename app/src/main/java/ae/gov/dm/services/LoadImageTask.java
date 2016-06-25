@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import ae.gov.dm.R;
 import ae.gov.dm.views.MainActivity;
 
 /**
@@ -70,12 +71,21 @@ public class LoadImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
     @Override
     protected void onPostExecute(List<Bitmap> bitmap) {
 
-        Bitmap bleft = bitmap.get(0);
-        Bitmap bright = bitmap.get(1);
+        Bitmap bLeft = bitmap.get(0);
+        Bitmap bRight = bitmap.get(1);
 
-        if (bleft != null && bright != null) {
-            Bitmap resizedLeft = Bitmap.createScaledBitmap(bleft, 330, 300, true);
-            Bitmap resizedRight = Bitmap.createScaledBitmap(bright, 330, 300, true);
+        if(bRight == null){
+            imgViewRight.setImageResource(R.drawable.default_news);
+        }
+
+        if(bLeft == null)
+        {
+            imgViewLeft.setImageResource(R.drawable.default_news);
+        }
+
+        if (bRight != null && bLeft != null) {
+            Bitmap resizedLeft = Bitmap.createScaledBitmap(bLeft, 330, 300, true);
+            Bitmap resizedRight = Bitmap.createScaledBitmap(bRight, 330, 300, true);
 
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.getContext());
             SharedPreferences.Editor editor = sp.edit();

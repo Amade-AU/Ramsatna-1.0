@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import ae.gov.dm.R;
 import ae.gov.dm.services.ApiService;
@@ -52,16 +53,13 @@ public class AddWordActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (mWord.getText().toString().equals("") || mMeaning.getText().toString().equals("")) {
-                    Snackbar snackbar = Snackbar.make(mLayout, R.string.blank_validation, Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                } else if (isValid(mWord.getText().toString(), mMeaning.getText().toString())) {
 
+                    Toast.makeText(AddWordActivity.this, R.string.blank_validation, Toast.LENGTH_SHORT).show();
+                } else if (isValid(mWord.getText().toString(), mMeaning.getText().toString())) {
                     ApiService service = new ApiService(AddWordActivity.this);
                     service.addWord(mWord.getText().toString(), mMeaning.getText().toString());
-
                 } else {
-                    Snackbar snackbar = Snackbar.make(mLayout, R.string.not_valid_word, Snackbar.LENGTH_LONG);
-                    snackbar.show();
+                    Toast.makeText(AddWordActivity.this, R.string.not_valid_word, Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -1,6 +1,8 @@
 package ae.gov.dm.views.fragments;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -115,6 +118,8 @@ public class HomeFragment extends Fragment {
     }
 
 
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -141,8 +146,9 @@ public class HomeFragment extends Fragment {
             Log.d(TAG, "onResume: " + e.getMessage());
         }
 
-
     }
+
+
 
     public void populateData() {
 
@@ -216,6 +222,7 @@ public class HomeFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
+            hideKeyboard(getActivity());
             getActivity().findViewById(R.id.btn_refresh).setVisibility(View.INVISIBLE);
         }
     }
@@ -230,6 +237,18 @@ public class HomeFragment extends Fragment {
             e.getMessage();
             return null;
         }
+    }
+
+    public static void hideKeyboard(Context ctx) {
+        InputMethodManager inputManager = (InputMethodManager) ctx
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View v = ((Activity) ctx).getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
 

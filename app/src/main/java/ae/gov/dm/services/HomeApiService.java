@@ -58,8 +58,6 @@ public class HomeApiService {
                         json = json + " " + scan.next();
                     }
 
-
-
                     config = new Gson().fromJson(json, Config.class);
 
                     Log.d(TAG, "run: " + config.getParams().getNews_1_title());

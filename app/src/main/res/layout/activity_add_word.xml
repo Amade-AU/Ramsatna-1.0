@@ -5,6 +5,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:windowSoftInputMode="adjustResize"
     android:background="@color/windowBackground"
     tools:context="Ramsatna.MainActivity">
 
@@ -42,6 +43,7 @@
         android:orientation="vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:windowSoftInputMode="adjustResize"
         android:paddingTop="16dp">
 
         <TextView

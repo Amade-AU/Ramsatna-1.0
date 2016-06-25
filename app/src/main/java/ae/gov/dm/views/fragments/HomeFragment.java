@@ -119,69 +119,87 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        new HomeApiService(new HomeApiService.ReturnData() {
-            @Override
-            public void handleReturnData(Config config) {
-                mConfig = config;
+        try {
+            new HomeApiService(new HomeApiService.ReturnData() {
+                @Override
+                public void handleReturnData(Config config) {
+                    mConfig = config;
 
-                mWordDay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(getActivity(), DetailsActivity.class);
-                        i.putExtra("word", mConfig.getRandom().getId());
-                        startActivity(i);
-                    }
-                });
+                    mWordDay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(getActivity(), DetailsActivity.class);
+                            i.putExtra("word", mConfig.getRandom().getId());
+                            startActivity(i);
+                        }
+                    });
 
-                populateData();
-            }
-        }).fetchHomeContent();
+                    populateData();
+                }
+            }).fetchHomeContent();
+        } catch (Exception e) {
+            Log.d(TAG, "onResume: " + e.getMessage());
+        }
+
+
     }
 
     public void populateData() {
 
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mTotalDict.setText(mConfig.getTotal_in_dictionary());
-                mWordDay.setText(mConfig.getRandom().getWord());
-                mWordDay.setTextColor(getResources().getColor(R.color.colorAccent));
+        try {
 
-                mImgLeft.setTag("left_image");
-                mImgRight.setTag("right_image");
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
-                String url = mConfig.getParams().getNews_1_url();
+                    mTotalDict.setText(mConfig.getTotal_in_dictionary());
+                    mWordDay.setText(mConfig.getRandom().getWord());
 
-                Log.d(TAG, "run: " + mConfig.getParams().getNews_1_title());
+                    if(isAdded()){
+                        mWordDay.setTextColor(getResources().getColor(R.color.colorAccent));
+                    }
 
-                if (!(url.equals(""))) {
 
-                    new LoadImageTask(mConfig.getParams().getNews_2_image_link(), mConfig.getParams().getNews_1_image_link(), mImgLeft, mImgRight).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    leftImageTxt.setText(mConfig.getParams().getNews_1_title());
-                    rightImageTxt.setText(mConfig.getParams().getNews_2_title());
+                    mImgLeft.setTag("left_image");
+                    mImgRight.setTag("right_image");
+
+                    String url = mConfig.getParams().getNews_1_url();
+
+                    Log.d(TAG, "run: " + mConfig.getParams().getNews_1_title());
+
+                    if (!(url.equals(""))) {
+
+                        new LoadImageTask(mConfig.getParams().getNews_2_image_link(), mConfig.getParams().getNews_1_image_link(), mImgLeft, mImgRight).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        leftImageTxt.setText(mConfig.getParams().getNews_1_title());
+                        rightImageTxt.setText(mConfig.getParams().getNews_2_title());
+                    }
+
+
+                    mImgLeft.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Uri uri = Uri.parse(mConfig.getParams().getNews_2_url());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }
+                    });
+
+                    mImgRight.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Uri uri = Uri.parse(mConfig.getParams().getNews_1_url());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }
+                    });
+
                 }
+            });
 
-
-                mImgLeft.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Uri uri = Uri.parse(mConfig.getParams().getNews_2_url());
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
-                    }
-                });
-
-                mImgRight.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Uri uri = Uri.parse(mConfig.getParams().getNews_1_url());
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
-                    }
-                });
-
-            }
-        });
+        }
+        catch(Exception e){
+            Log.d(TAG, "populateData: " + e.getMessage());
+        }
 
 
     }

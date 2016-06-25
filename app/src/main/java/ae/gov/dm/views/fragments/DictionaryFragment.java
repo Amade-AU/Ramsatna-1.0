@@ -299,7 +299,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
             dictionary.setAdapter(adaptor);
             adaptor.notifyDataSetChanged();
             empty_view.setVisibility(View.VISIBLE);
-            dictionary.setEmptyView(getActivity().findViewById(R.id.empty_view));
+            dictionary.setEmptyView(empty_view);
             Log.d(TAG, "onPostExecute: Finished Populating");
         }
     }

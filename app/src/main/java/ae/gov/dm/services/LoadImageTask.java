@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -69,18 +70,23 @@ public class LoadImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
     @Override
     protected void onPostExecute(List<Bitmap> bitmap) {
 
-        Bitmap resizedLeft = Bitmap.createScaledBitmap(bitmap.get(0), 330, 300, true);
-        Bitmap resizedRight = Bitmap.createScaledBitmap(bitmap.get(1), 330, 300, true);
+        Bitmap bleft = bitmap.get(0);
+        Bitmap bright = bitmap.get(1);
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.getContext());
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("bitmap_right", BitMapToString(resizedRight));
+        if (bleft != null && bright != null) {
+            Bitmap resizedLeft = Bitmap.createScaledBitmap(bleft, 330, 300, true);
+            Bitmap resizedRight = Bitmap.createScaledBitmap(bright, 330, 300, true);
 
-        editor.putString("bitmap_left", BitMapToString(resizedLeft));
-        editor.commit();
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.getContext());
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("bitmap_right", BitMapToString(resizedRight));
 
-        imgViewLeft.setImageBitmap(resizedLeft);
-        imgViewRight.setImageBitmap(resizedRight);
+            editor.putString("bitmap_left", BitMapToString(resizedLeft));
+            editor.commit();
+
+            imgViewLeft.setImageBitmap(resizedLeft);
+            imgViewRight.setImageBitmap(resizedRight);
+        }
 
     }
 
@@ -91,5 +97,16 @@ public class LoadImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
         byte[] b = baos.toByteArray();
         String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
+    }
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }

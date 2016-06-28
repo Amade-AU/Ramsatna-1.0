@@ -160,7 +160,6 @@ public class FavoritesFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            getActivity().findViewById(R.id.btn_refresh).setVisibility(View.INVISIBLE);
             hideKeyboard(getActivity());
         }
     }

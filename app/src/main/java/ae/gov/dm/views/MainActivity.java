@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        mBttnRefresh = (ImageButton) findViewById(R.id.btn_refresh);
         overridePendingTransition(0, R.anim.anim_slide_out_left);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);

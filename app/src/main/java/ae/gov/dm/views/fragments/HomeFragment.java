@@ -31,6 +31,7 @@ import ae.gov.dm.R;
 import ae.gov.dm.model.configs.Config;
 import ae.gov.dm.services.HomeApiService;
 import ae.gov.dm.services.LoadImageTask;
+import ae.gov.dm.util.helpers.FileHelper;
 import ae.gov.dm.views.AddWordActivity;
 import ae.gov.dm.views.DetailsActivity;
 
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment {
     private Button mAddWordHome;
     private ImageView mBottomLogo;
     private ScrollView mScrollView;
+    private FileHelper mFileHelper;
 
     public HomeFragment() {
 
@@ -76,6 +78,7 @@ public class HomeFragment extends Fragment {
         mAddWordHome = (Button) view.findViewById(R.id.home_add_word_botton);
         mBottomLogo = (ImageView) view.findViewById(R.id.bottom_logo);
         mScrollView = (ScrollView) view.findViewById(R.id.home_scroll);
+        mFileHelper = new FileHelper();
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         Gson gson = new Gson();
@@ -87,7 +90,8 @@ public class HomeFragment extends Fragment {
 
         if (json != "") {
             mConfig = gson.fromJson(json, Config.class);
-            mTotalDict.setText(mConfig.getTotal_in_dictionary());
+
+            mTotalDict.setText(mFileHelper.getNumberInArabic(mConfig.getTotal_in_dictionary()));
             mWordDay.setText(mConfig.getRandom().getWord());
             leftImageTxt.setText(mConfig.getParams().getNews_1_title());
             rightImageTxt.setText(mConfig.getParams().getNews_2_title());
@@ -116,8 +120,6 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
-
-
 
 
     @Override
@@ -149,7 +151,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-
     public void populateData() {
 
         try {
@@ -158,10 +159,10 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void run() {
 
-                    mTotalDict.setText(mConfig.getTotal_in_dictionary());
+                    mTotalDict.setText(mFileHelper.getNumberInArabic(mConfig.getTotal_in_dictionary()));
                     mWordDay.setText(mConfig.getRandom().getWord());
 
-                    if(isAdded()){
+                    if (isAdded()) {
                         mWordDay.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
 
@@ -202,8 +203,7 @@ public class HomeFragment extends Fragment {
                 }
             });
 
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Log.d(TAG, "populateData: " + e.getMessage());
         }
 
@@ -223,7 +223,8 @@ public class HomeFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             hideKeyboard(getActivity());
-            getActivity().findViewById(R.id.btn_refresh).setVisibility(View.INVISIBLE);
+
+
         }
     }
 

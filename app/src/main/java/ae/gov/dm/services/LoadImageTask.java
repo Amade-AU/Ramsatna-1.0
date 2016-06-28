@@ -25,6 +25,7 @@ import ae.gov.dm.views.MainActivity;
  */
 public class LoadImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
 
+    private static final String TAG = "LoadImageTask";
     private String urlLeft;
     private String urlRight;
     private ImageView imgViewLeft;
@@ -71,31 +72,38 @@ public class LoadImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
     @Override
     protected void onPostExecute(List<Bitmap> bitmap) {
 
-        Bitmap bLeft = bitmap.get(0);
-        Bitmap bRight = bitmap.get(1);
+        try {
 
-        if(bRight == null){
-            imgViewRight.setImageResource(R.drawable.default_news);
+            Bitmap bLeft = bitmap.get(0);
+            Bitmap bRight = bitmap.get(1);
+
+            if (bRight == null) {
+                imgViewRight.setImageResource(R.drawable.default_news);
+            }
+
+            if (bLeft == null) {
+                imgViewLeft.setImageResource(R.drawable.default_news);
+            }
+
+            if (bRight != null && bLeft != null) {
+                Bitmap resizedLeft = Bitmap.createScaledBitmap(bLeft, 330, 300, true);
+                Bitmap resizedRight = Bitmap.createScaledBitmap(bRight, 330, 300, true);
+
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.getContext());
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("bitmap_right", BitMapToString(resizedRight));
+
+                editor.putString("bitmap_left", BitMapToString(resizedLeft));
+                editor.commit();
+
+                imgViewLeft.setImageBitmap(resizedLeft);
+                imgViewRight.setImageBitmap(resizedRight);
+            }
+
         }
 
-        if(bLeft == null)
-        {
-            imgViewLeft.setImageResource(R.drawable.default_news);
-        }
-
-        if (bRight != null && bLeft != null) {
-            Bitmap resizedLeft = Bitmap.createScaledBitmap(bLeft, 330, 300, true);
-            Bitmap resizedRight = Bitmap.createScaledBitmap(bRight, 330, 300, true);
-
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.getContext());
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putString("bitmap_right", BitMapToString(resizedRight));
-
-            editor.putString("bitmap_left", BitMapToString(resizedLeft));
-            editor.commit();
-
-            imgViewLeft.setImageBitmap(resizedLeft);
-            imgViewRight.setImageBitmap(resizedRight);
+        catch(Exception e){
+            Log.d(TAG, "onPostExecute: " + e.getMessage());
         }
 
     }

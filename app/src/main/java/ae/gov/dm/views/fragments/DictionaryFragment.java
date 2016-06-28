@@ -1,6 +1,7 @@
 package ae.gov.dm.views.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -61,6 +62,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
     private FloatingActionButton mAddWord;
     private Button mAddbutton;
     private LinearLayout empty_view;
+    private ProgressDialog progressDialog;
 
 
     public DictionaryFragment() {
@@ -89,7 +91,6 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
         dictionary.setFastScrollEnabled(true);
         searchBox = (SearchView) view.findViewById(R.id.inputSearch);
         mAddbutton = (Button) view.findViewById(R.id.new_word);
-        mBttnRefresh = (ImageButton) getActivity().findViewById(R.id.btn_refresh);
         empty_view = (LinearLayout) view.findViewById(R.id.empty_view);
         words_list = new ArrayList<>();
         context = container.getContext();
@@ -198,50 +199,6 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
         setupUI(view.findViewById(R.id.dictionary_container));
 
 
-        mBttnRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                new ApiService.getDatabaseVerion(new ApiService.getDatabaseVerion.ReturnVersion() {
-                    @Override
-                    public void handleReturnVersion(String databaseVersion) {
-                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                        String version = sp.getString("version", "");
-                        String apiVersion = databaseVersion;
-
-                        if (version == null) {
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.putString("version", apiVersion);
-                            editor.commit();
-                            new ApiService.DownloadData(new ApiService.DownloadData.ReturnData() {
-                                @Override
-                                public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
-                                    new Populate().execute();
-                                }
-                            }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        } else {
-                            if (version.equals(apiVersion)) {
-                                Toast.makeText(getContext(), R.string.no_new_words_text, Toast.LENGTH_SHORT).show();
-                            } else {
-                                SharedPreferences.Editor editor = sp.edit();
-                                editor.clear();
-                                editor.putString("version", apiVersion);
-                                editor.commit();
-                                Toast.makeText(getContext(), R.string.new_version_available_text, Toast.LENGTH_LONG).show();
-                                new ApiService.DownloadData(new ApiService.DownloadData.ReturnData() {
-                                    @Override
-                                    public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
-                                        new Populate().execute();
-                                    }
-                                }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                        }
-
-                    }
-                }).execute();
-            }
-        });
-
         new Populate().execute();
         adaptor.notifyDataSetChanged();
 
@@ -252,7 +209,8 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            getActivity().findViewById(R.id.btn_refresh).setVisibility(View.VISIBLE);
+            checkForUpdates();
+            Log.d(TAG, "setUserVisibleHint: ");
         }
 
     }
@@ -349,6 +307,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
         }
     }
 
+
     public boolean isConnectedToInternet() {
         ConnectivityManager connectivity = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null) {
@@ -358,9 +317,59 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
                     if (info[i].getState() == NetworkInfo.State.CONNECTED) {
                         return true;
                     }
-
         }
         return false;
+    }
+
+    public void checkForUpdates() {
+
+        new ApiService.getDatabaseVerion(new ApiService.getDatabaseVerion.ReturnVersion() {
+            @Override
+            public void handleReturnVersion(String databaseVersion) {
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                String version = sp.getString("version", "");
+                final String apiVersion = databaseVersion;
+                progressDialog = new ProgressDialog(getActivity());
+
+                if (version == null) {
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("version", apiVersion);
+                    editor.commit();
+                    new ApiService.DownloadData(new ApiService.DownloadData.ReturnData() {
+                        @Override
+                        public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
+                            new Populate().execute();
+                        }
+                    }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                } else {
+
+                    if (!version.equals(apiVersion)) {
+                        final SharedPreferences.Editor editor = sp.edit();
+                        editor.clear();
+                        Toast.makeText(getContext(), R.string.new_version_available_text, Toast.LENGTH_LONG).show();
+
+                        progressDialog.setTitle("معالجة");
+                        progressDialog.setMessage(getResources().getString(R.string.new_version_available_text));
+                        progressDialog.setCancelable(false);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.show();
+
+                        new ApiService.DownloadData(new ApiService.DownloadData.ReturnData() {
+                            @Override
+                            public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
+                                new Populate().execute();
+                                editor.putString("version", apiVersion);
+                                editor.commit();
+                                progressDialog.hide();
+                            }
+                        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+                }
+
+            }
+        }).execute();
+
+
     }
 
 

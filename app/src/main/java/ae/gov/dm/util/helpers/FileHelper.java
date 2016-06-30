@@ -7,6 +7,7 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -121,7 +122,7 @@ public class FileHelper {
     }
 
 
-    public StringBuilder getNumberInArabic(String number){
+    public String getNumberInArabic(String number){
         char[] arabicChars = {'٠','١','٢','٣','٤','٥','٦','٧','٨','٩'};
         StringBuilder builder = new StringBuilder();
         for(int i =0;i<number.length();i++)
@@ -136,7 +137,20 @@ public class FileHelper {
             }
         }
 
-        return builder;
+
+        try {
+            String sub1 = builder.substring(0, 1);
+            String sub2 = builder.substring(1);
+            String num = sub1 + "," + sub2;
+
+            return num;
+        }
+        catch(IndexOutOfBoundsException exception){
+            Log.d(TAG, "getNumberInArabic: " + exception.getMessage());
+        }
+
+
+        return builder.toString();
     }
 
 

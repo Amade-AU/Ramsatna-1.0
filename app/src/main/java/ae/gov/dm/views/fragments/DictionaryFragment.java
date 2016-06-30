@@ -209,7 +209,12 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            checkForUpdates();
+            try {
+                checkForUpdates();
+            } catch (Exception e) {
+                Log.d(TAG, "setUserVisibleHint: " + e.getMessage());
+            }
+
             Log.d(TAG, "setUserVisibleHint: ");
         }
 
@@ -326,51 +331,57 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
         new ApiService.getDatabaseVerion(new ApiService.getDatabaseVerion.ReturnVersion() {
             @Override
             public void handleReturnVersion(String databaseVersion) {
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                String version = sp.getString("version", "");
-                final String apiVersion = databaseVersion;
-                progressDialog = new ProgressDialog(getActivity());
 
-                if (version == null) {
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("version", apiVersion);
-                    editor.commit();
-                    new ApiService.DownloadData(new ApiService.DownloadData.ReturnData() {
-                        @Override
-                        public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
-                            new Populate().execute();
-                        }
-                    }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                } else {
+                try {
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    String version = sp.getString("version", "");
+                    final String apiVersion = databaseVersion;
+                    progressDialog = new ProgressDialog(getActivity());
 
-                    if (!version.equals(apiVersion)) {
-                        final SharedPreferences.Editor editor = sp.edit();
-                        editor.clear();
-                        Toast.makeText(getContext(), R.string.new_version_available_text, Toast.LENGTH_LONG).show();
-
-                        progressDialog.setTitle("معالجة");
-                        progressDialog.setMessage(getResources().getString(R.string.new_version_available_text));
-                        progressDialog.setCancelable(false);
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.show();
-
+                    if (version == null) {
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("version", apiVersion);
+                        editor.commit();
                         new ApiService.DownloadData(new ApiService.DownloadData.ReturnData() {
                             @Override
                             public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
                                 new Populate().execute();
-                                editor.putString("version", apiVersion);
-                                editor.commit();
-                                progressDialog.hide();
                             }
                         }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    } else {
+
+                        if (!version.equals(apiVersion)) {
+                            final SharedPreferences.Editor editor = sp.edit();
+                            editor.clear();
+                            Toast.makeText(getContext(), R.string.new_version_available_text, Toast.LENGTH_LONG).show();
+
+                            progressDialog.setTitle("معالجة");
+                            progressDialog.setMessage(getResources().getString(R.string.new_version_available_text));
+                            progressDialog.setCancelable(false);
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.show();
+
+                            new ApiService.DownloadData(new ApiService.DownloadData.ReturnData() {
+                                @Override
+                                public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
+                                    new Populate().execute();
+                                    editor.putString("version", apiVersion);
+                                    editor.commit();
+                                    progressDialog.hide();
+                                }
+                            }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
                     }
+
+                } catch (Exception e) {
+                    Log.d(TAG, "handleReturnVersion: " + e.getMessage());
                 }
+
 
             }
         }).execute();
-
-
     }
-
-
 }
+
+
+

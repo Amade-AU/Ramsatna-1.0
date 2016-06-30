@@ -38,7 +38,7 @@ public class AboutActivity extends AppCompatActivity {
 
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
-                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"fatma676@gmail.com"});
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"esupport@dm.gov.ae"});
                 i.putExtra(Intent.EXTRA_SUBJECT, "رمستنا - تواصل");
                 try {
                     startActivity(Intent.createChooser(i, "Send Mail"));

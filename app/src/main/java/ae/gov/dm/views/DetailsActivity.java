@@ -141,7 +141,7 @@ public class DetailsActivity extends AppCompatActivity {
         mShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shareText = "كلمة: " + word.getWord() + "\n" + "معنى: " + word.getMeaning();
+                String shareText = word.getWord()+ ": " + word.getMeaning() + "\n\n" + "عبر تطبيق رمستنا" + "\n" + getString(R.string.share_url);
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, shareText);

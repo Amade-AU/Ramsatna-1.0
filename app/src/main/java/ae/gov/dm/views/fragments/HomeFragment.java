@@ -126,27 +126,6 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        try {
-            new HomeApiService(new HomeApiService.ReturnData() {
-                @Override
-                public void handleReturnData(Config config) {
-                    mConfig = config;
-
-                    mWordDay.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(getActivity(), DetailsActivity.class);
-                            i.putExtra("word", mConfig.getRandom().getId());
-                            startActivity(i);
-                        }
-                    });
-
-                    populateData();
-                }
-            }).fetchHomeContent();
-        } catch (Exception e) {
-            Log.d(TAG, "onResume: " + e.getMessage());
-        }
 
     }
 
@@ -224,7 +203,27 @@ public class HomeFragment extends Fragment {
         if (isVisibleToUser) {
             hideKeyboard(getActivity());
 
+            try {
+                new HomeApiService(new HomeApiService.ReturnData() {
+                    @Override
+                    public void handleReturnData(Config config) {
+                        mConfig = config;
 
+                        mWordDay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent(getActivity(), DetailsActivity.class);
+                                i.putExtra("word", mConfig.getRandom().getId());
+                                startActivity(i);
+                            }
+                        });
+
+                        populateData();
+                    }
+                }).fetchHomeContent();
+            } catch (Exception e) {
+                Log.d(TAG, "onResume: " + e.getMessage());
+            }
         }
     }
 

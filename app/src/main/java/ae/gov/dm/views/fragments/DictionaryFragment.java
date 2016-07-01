@@ -355,7 +355,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
                             editor.clear();
                             Toast.makeText(getContext(), R.string.new_version_available_text, Toast.LENGTH_LONG).show();
 
-                            progressDialog.setTitle("معالجة");
+                            progressDialog.setTitle("تحديث");
                             progressDialog.setMessage(getResources().getString(R.string.new_version_available_text));
                             progressDialog.setCancelable(false);
                             progressDialog.setIndeterminate(true);

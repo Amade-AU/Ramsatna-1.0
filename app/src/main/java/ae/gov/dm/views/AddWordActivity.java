@@ -2,7 +2,6 @@ package ae.gov.dm.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -52,15 +51,18 @@ public class AddWordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 if (mWord.getText().toString().equals("") || mMeaning.getText().toString().equals("")) {
 
                     Toast.makeText(AddWordActivity.this, R.string.blank_validation, Toast.LENGTH_SHORT).show();
                 } else if (isValid(mWord.getText().toString(), mMeaning.getText().toString())) {
                     ApiService service = new ApiService(AddWordActivity.this);
                     service.addWord(mWord.getText().toString(), mMeaning.getText().toString());
+
                 } else {
                     Toast.makeText(AddWordActivity.this, R.string.not_valid_word, Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 

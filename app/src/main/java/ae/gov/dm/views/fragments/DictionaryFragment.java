@@ -350,7 +350,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
                         }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     } else {
 
-                        if (!version.equals(apiVersion)) {
+                        if (!version.equals(apiVersion) && isConnectedToInternet()) {
                             final SharedPreferences.Editor editor = sp.edit();
                             editor.clear();
                             Toast.makeText(getContext(), R.string.new_version_available_text, Toast.LENGTH_LONG).show();

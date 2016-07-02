@@ -2,9 +2,11 @@ package ae.gov.dm.services;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Looper;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -76,8 +78,15 @@ public class ApiService {
                 .header("content-type", "application/x-www-form-urlencoded")
                 .build();
 
+        final ProgressDialog dialog = new ProgressDialog(mCtx);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("تحديث");
+        dialog.setCancelable(false);
+        dialog.show();
+
 
         client.newCall(request).enqueue(new Callback() {
+
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -85,6 +94,7 @@ public class ApiService {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        dialog.dismiss();
                         Toast.makeText(MainActivity.getContext(), R.string.connection_error, Toast.LENGTH_LONG).
                                 show();
                     }
@@ -104,6 +114,7 @@ public class ApiService {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+                            dialog.dismiss();
                             if (("0").equals(res)) {
                                 Toast.makeText(MainActivity.getContext(), R.string.message_succesfull, Toast.LENGTH_LONG).show();
                                 ((Activity) mCtx).finish();

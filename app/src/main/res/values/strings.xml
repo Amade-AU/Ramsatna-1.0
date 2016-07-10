@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">رمستنا</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="letter">
+        <item>ا</item>
+        <item>أ</item>
+        <item>إ</item>
+        <item>آ</item>
+        <item>ب</item>
+        <item>ت</item>
+        <item>ث</item>
+        <item>ج</item>
+        <item>ح</item>
+        <item>خ</item>
+        <item>د</item>
+        <item>ذ</item>
+        <item>ر</item>
+        <item>ز</item>
+        <item>س</item>
+        <item>ش</item>
+        <item>ص</item>
+        <item>ض</item>
+        <item>ط</item>
+        <item>ظ</item>
+        <item>ع</item>
+        <item>غ</item>
+        <item>ف</item>
+        <item>ق</item>
+        <item>ك</item>
+        <item>ل</item>
+        <item>م</item>
+        <item>ن</item>
+        <item>ه</item>
+        <item>و</item>
+        <item>ي</item>
+    </string-array>
+
+
+    <string name="title_activity_details">المعجم</string>
+
+    <!--  add new word  -->
+    <string name="add_word">إضافة كلمة</string>
+    <string name="new_word_string">كلمة</string>
+    <string name="new_word_meaning">المعنى</string>
+    <string name="bttn_add_text">أرسل الآن</string>
+    <string name="word_already_exists_text">هذه المفردة موجودة</string>
+    <string name="message_succesfull">تم استلام اقتراحك</string>
+    <string name="operation_failed_message">العملية غير ناجحة</string>
+
+
+    <!--  dictionary tab  -->
+    <string name="list_no_results">لم يتم العثور على نتائج</string>
+    <string name="share_title">كيف تريد للمشاركة؟</string>
+    <string name="search_box_text">بحث...</string>
+    <string name="action_refresh">refresh</string>
+    <string name="new_version_available_text">جاري التحديث..</string>
+    <string name="no_new_words_text">لا توجد كلمات جديدة</string>
+
+
+    <string name="homepage_tab_title">الرئيسية</string>
+    <string name="dictionary_tab_title">المعجم</string>
+    <string name="favorite_tab_title">المفضلة</string>
+
+    <!--  network request fails  -->
+    <string name="connection_error">لم يتم التمكن من الاتصال</string>
+
+    <!--  general  -->
+    <string name="ok">تم</string>
+    <string name="thank_you">شكراً</string>
+    <string name="sorry">عذراً</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="blank_validation">لا يمكن تركه فارغا</string>
+    <string name="not_valid_word">ليست كلمة صحيحة</string>
+    <string name="about_page_title">كلمة شكر مقدمة لكل من ساهم في إنشاء هذا التطبيق</string>
+    <string name="credit_title_1">فكرة: السيد/ خالد بن زايد – مساعد مدير العام – قطاع الاتصال والمجتمع.
+</string>
+    <string name="credit_title_2">تجميع المادة: موظفوا إدارة مركز بلدية دبي و إدارة المعرفة - قسم التبادل المعرفي.</string>
+    <string name="credit_title_3">الاشراف العام: مريم الخمري.</string>
+    <string name="credit_title_4">التدقيق و الاعداد الالكتروني :إدارة المعرفة - قسم التبادل المعرفي.</string>
+    <string name="share_url">http://onelink.to/q4fxqz</string>
+
+
+</resources>

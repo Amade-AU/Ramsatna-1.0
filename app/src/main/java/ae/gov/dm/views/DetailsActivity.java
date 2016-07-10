@@ -3,6 +3,7 @@ package ae.gov.dm.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
@@ -41,11 +42,9 @@ public class DetailsActivity extends AppCompatActivity {
     private CoordinatorLayout layout;
     private TextView mWord;
     private FloatingActionButton mShare;
+
     private ImageView imgVoice;
 
-    public ImageView getImgVoice() {
-        return imgVoice;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +64,18 @@ public class DetailsActivity extends AppCompatActivity {
         if (word != null && word.getHas_audio().equals("1")) {
             setContentView(R.layout.content_details_audio);
 
-           imgVoice = (ImageView) findViewById(R.id.speaker);
+
+            imgVoice = (ImageView) findViewById(R.id.speaker);
+
 
             imgVoice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     imgVoice.setImageResource(R.drawable.speaker_disabled);
                     imgVoice.setClickable(false);
 
-                    try{
+                    try {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -90,12 +92,10 @@ public class DetailsActivity extends AppCompatActivity {
 
                             }
                         }).start();
-                    }
-
-                    catch(Exception e)
-                    {
+                    } catch (Exception e) {
                         Log.d(TAG, "onClick: " + e.getMessage());
                     }
+
                 }
             });
 
@@ -170,7 +170,7 @@ public class DetailsActivity extends AppCompatActivity {
         mShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shareText = word.getWord()+ ": " + word.getMeaning() + "\n\n" + "عبر تطبيق رمستنا" + "\n" + getString(R.string.share_url);
+                String shareText = word.getWord() + ": " + word.getMeaning() + "\n\n" + "عبر تطبيق رمستنا" + "\n" + getString(R.string.share_url);
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, shareText);

@@ -42,8 +42,7 @@ public class DetailsActivity extends AppCompatActivity {
     private CoordinatorLayout layout;
     private TextView mWord;
     private FloatingActionButton mShare;
-
-    private ImageView imgVoice;
+    private ImageView mImgVoice;
 
 
     @Override
@@ -65,15 +64,15 @@ public class DetailsActivity extends AppCompatActivity {
             setContentView(R.layout.content_details_audio);
 
 
-            imgVoice = (ImageView) findViewById(R.id.speaker);
+            mImgVoice = (ImageView) findViewById(R.id.speaker);
 
 
-            imgVoice.setOnClickListener(new View.OnClickListener() {
+            mImgVoice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    imgVoice.setImageResource(R.drawable.speaker_disabled);
-                    imgVoice.setClickable(false);
+                    mImgVoice.setImageResource(R.drawable.speaker_disabled);
+                    mImgVoice.setClickable(false);
 
                     try {
                         new Thread(new Runnable() {
@@ -85,8 +84,8 @@ public class DetailsActivity extends AppCompatActivity {
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        imgVoice.setImageResource(R.drawable.ic_speaker);
-                                        imgVoice.setClickable(true);
+                                        mImgVoice.setImageResource(R.drawable.ic_speaker);
+                                        mImgVoice.setClickable(true);
                                     }
                                 });
 

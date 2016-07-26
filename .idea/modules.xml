@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/Ramsatna-android-app.iml" filepath="$PROJECT_DIR$/Ramsatna-android-app.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/Ramsatna-1.iml" filepath="$PROJECT_DIR$/Ramsatna-1.iml" />
->>>>>>> efed97d9fd12fb86dee75d4aed709e11dea6fe13
+      <module fileurl="file://$PROJECT_DIR$/Ramsatna-1.0.iml" filepath="$PROJECT_DIR$/Ramsatna-1.0.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

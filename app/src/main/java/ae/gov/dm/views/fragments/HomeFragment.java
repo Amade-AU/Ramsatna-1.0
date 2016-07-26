@@ -137,28 +137,32 @@ public class HomeFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                   
+                    if(mConfig!=null){
+                        mTotalDict.setText(mFileHelper.getNumberInArabic(mConfig.getTotal_in_dictionary()));
+                        mWordDay.setText(mConfig.getRandom().getWord());
 
-                    mTotalDict.setText(mFileHelper.getNumberInArabic(mConfig.getTotal_in_dictionary()));
-                    mWordDay.setText(mConfig.getRandom().getWord());
+                        if (isAdded()) {
+                            mWordDay.setTextColor(getResources().getColor(R.color.colorAccent));
+                        }
 
-                    if (isAdded()) {
-                        mWordDay.setTextColor(getResources().getColor(R.color.colorAccent));
+
+                        mImgLeft.setTag("left_image");
+                        mImgRight.setTag("right_image");
+
+                        String url = mConfig.getParams().getNews_1_url();
+
+                        Log.d(TAG, "run: " + mConfig.getParams().getNews_1_title());
+
+                        if (!(url.equals(""))) {
+
+                            new LoadImageTask(mConfig.getParams().getNews_2_image_link(), mConfig.getParams().getNews_1_image_link(), mImgLeft, mImgRight).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            leftImageTxt.setText(mConfig.getParams().getNews_1_title());
+                            rightImageTxt.setText(mConfig.getParams().getNews_2_title());
+                        }
                     }
 
 
-                    mImgLeft.setTag("left_image");
-                    mImgRight.setTag("right_image");
-
-                    String url = mConfig.getParams().getNews_1_url();
-
-                    Log.d(TAG, "run: " + mConfig.getParams().getNews_1_title());
-
-                    if (!(url.equals(""))) {
-
-                        new LoadImageTask(mConfig.getParams().getNews_2_image_link(), mConfig.getParams().getNews_1_image_link(), mImgLeft, mImgRight).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        leftImageTxt.setText(mConfig.getParams().getNews_1_title());
-                        rightImageTxt.setText(mConfig.getParams().getNews_2_title());
-                    }
 
 
                     mImgLeft.setOnClickListener(new View.OnClickListener() {

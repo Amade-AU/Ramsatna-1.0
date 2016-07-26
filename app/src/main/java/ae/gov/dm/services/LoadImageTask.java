@@ -72,6 +72,10 @@ public class LoadImageTask extends AsyncTask<Void, Void, List<Bitmap>> {
     @Override
     protected void onPostExecute(List<Bitmap> bitmap) {
 
+        if(bitmap == null){
+            return;
+        }
+
         try {
 
             Bitmap bLeft = bitmap.get(0);

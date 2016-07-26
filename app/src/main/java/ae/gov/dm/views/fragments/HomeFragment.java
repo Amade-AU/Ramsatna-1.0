@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                   
+
                     if(mConfig!=null){
                         mTotalDict.setText(mFileHelper.getNumberInArabic(mConfig.getTotal_in_dictionary()));
                         mWordDay.setText(mConfig.getRandom().getWord());

@@ -1,6 +1,7 @@
 package ae.gov.dm.util.helpers;
 
 
+import android.content.Context;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.j256.ormlite.dao.Dao;
+import com.squareup.picasso.Picasso;
 
 import ae.gov.dm.model.Favorites;
 import ae.gov.dm.model.Version;
@@ -49,10 +51,11 @@ public class FileHelper {
      * Returns a list of Dictionary objects with the all the data.
      *
      * @param is
+     * @param mCtx
      * @return
      */
 
-    public ArrayList<WordModel> importData(InputStream is) {
+    public ArrayList<WordModel> importData(InputStream is, Context mCtx) {
         ArrayList<WordModel> words = new ArrayList<>();
 
         Scanner scan = new Scanner(is);
@@ -72,6 +75,8 @@ public class FileHelper {
                 word.setSearch_word(fields[3]);
                 word.setRecord_id(fields[4]);
                 word.setHas_audio(fields[5]);
+
+                Picasso.with(mCtx).invalidate(Constants.IMAGE_TYPE + word.getRecord_id() + Constants.IMAGE_ENDPOINT);
 
 
                 try {

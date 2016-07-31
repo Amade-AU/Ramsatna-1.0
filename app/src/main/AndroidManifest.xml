@@ -20,7 +20,7 @@
             android:name=".views.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:uiOptions="splitActionBarWhenNarrow"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         android:fitsSystemWindows="true"
         <activity
             android:name=".views.DetailsActivity"
@@ -38,11 +38,11 @@
         <activity android:name=".views.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
+        <activity android:name=".views.FullScreenActivity"></activity>
     </application>
 
 </manifest>

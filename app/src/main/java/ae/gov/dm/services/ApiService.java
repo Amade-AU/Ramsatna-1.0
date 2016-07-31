@@ -45,7 +45,7 @@ public class ApiService {
     private static final String DATABASE_VERSION_ENDPOINT_ = "https://3on.ae/clients/DM/dictionary/version.txt";
     private String TAG = getClass().getSimpleName();
     private final OkHttpClient client = new OkHttpClient();
-    private Context mCtx;
+    private static Context mCtx;
 
     public ApiService() {
     }
@@ -213,7 +213,7 @@ public class ApiService {
             try {
                 URL url = new URL(DOWNLOAD_FILE_ENDPOINT);
                 FileHelper fileHelper = new FileHelper();
-                words_list = fileHelper.importData(url.openStream());
+                words_list = fileHelper.importData(url.openStream(), mCtx);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {

@@ -246,6 +246,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
                 words_list = (ArrayList) wordDao.queryForAll();
 
                 for (WordModel w : words_list) {
+                    if(w.getRecord_id().equals("132") || w.getRecord_id().equals("2778")) Log.d("Image Words: " , w.getWord());
                     words.add(w.getWord());
                 }
 

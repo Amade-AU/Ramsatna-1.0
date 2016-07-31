@@ -205,9 +205,8 @@ public class HomeFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            hideKeyboard(getActivity());
-
             try {
+                hideKeyboard(getActivity());
                 new HomeApiService(new HomeApiService.ReturnData() {
                     @Override
                     public void handleReturnData(Config config) {

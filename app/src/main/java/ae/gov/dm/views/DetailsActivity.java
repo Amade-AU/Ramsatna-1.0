@@ -9,12 +9,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -26,6 +28,7 @@ import ae.gov.dm.R;
 import ae.gov.dm.model.Favorites;
 import ae.gov.dm.model.WordModel;
 import ae.gov.dm.services.AudioService;
+import ae.gov.dm.services.LoadImageService;
 import ae.gov.dm.util.helpers.DatabaseHelper;
 
 /**
@@ -43,11 +46,17 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView mWord;
     private FloatingActionButton mShare;
     private ImageView mImgVoice;
+    private ImageView mWordImage;
+    private LoadImageService imageService;
+    private LinearLayout mLayout;
+    private static final String IMAGE_ENDPOINT = "https://3on.ae/clients/DM/photos/";
+    private static final String IMAGE_TYPE = ".png";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         Intent i = getIntent();
         final String recordId = i.getStringExtra("word");
@@ -65,6 +74,7 @@ public class DetailsActivity extends AppCompatActivity {
 
 
             mImgVoice = (ImageView) findViewById(R.id.speaker);
+
 
 
             mImgVoice.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +124,24 @@ public class DetailsActivity extends AppCompatActivity {
         mFav = (ImageView) findViewById(R.id.favorites);
         layout = (CoordinatorLayout) findViewById(R.id.word_details_layout);
         mWord = (TextView) findViewById(R.id.word_text);
+        mWordImage = (ImageView) findViewById(R.id.word_image);
+        mLayout = (LinearLayout) findViewById(R.id.detail_layout);
+
+        //mLayout.removeAllViews();
+
+        imageService = new LoadImageService();
+        imageService.getImageForWord(recordId, DetailsActivity.this,mWordImage);
+
+
+        mWordImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DetailsActivity.this, FullScreenActivity.class);
+                i.putExtra("url", IMAGE_ENDPOINT + recordId + IMAGE_TYPE);
+                startActivity(i);
+            }
+        });
+
 
 
         // Sets the favorites icon for the word if it is marked as favorite

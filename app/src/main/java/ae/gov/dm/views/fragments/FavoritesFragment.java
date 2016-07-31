@@ -159,9 +159,15 @@ public class FavoritesFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            hideKeyboard(getActivity());
+        try{
+            if (isVisibleToUser) {
+                hideKeyboard(getActivity());
+            }
         }
+        catch(Exception e){
+            Log.e("FavoritesFragment: " , e.getMessage());
+        }
+
     }
 
     public static void hideKeyboard(Context ctx) {

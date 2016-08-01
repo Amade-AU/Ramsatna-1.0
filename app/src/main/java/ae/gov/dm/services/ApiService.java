@@ -190,13 +190,15 @@ public class ApiService {
         private ReturnData returnData = null;
         private String TAG = "DownloadData";
 
+
         public interface ReturnData {
             void handleReturnData(ArrayList<WordModel> words_list, boolean locked);
         }
 
 
-        public DownloadData(ReturnData delegate) {
+        public DownloadData(ReturnData delegate, Context ctx) {
             this.returnData = delegate;
+            mCtx = ctx;
         }
 
         @Override

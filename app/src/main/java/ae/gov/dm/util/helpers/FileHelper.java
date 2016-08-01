@@ -2,6 +2,8 @@ package ae.gov.dm.util.helpers;
 
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -55,7 +57,7 @@ public class FileHelper {
      * @return
      */
 
-    public ArrayList<WordModel> importData(InputStream is, Context mCtx) {
+    public ArrayList<WordModel> importData(InputStream is, final Context mCtx) {
         ArrayList<WordModel> words = new ArrayList<>();
 
         Scanner scan = new Scanner(is);
@@ -68,7 +70,7 @@ public class FileHelper {
 
             if (validateWord(fields[3])) {
 
-                WordModel word = new WordModel();
+                final WordModel word = new WordModel();
                 word.setLetter(fields[0].trim());
                 word.setWord(fields[1].trim());
                 word.setMeaning(fields[2]);
@@ -76,7 +78,12 @@ public class FileHelper {
                 word.setRecord_id(fields[4]);
                 word.setHas_audio(fields[5]);
 
-                Picasso.with(mCtx).invalidate(Constants.IMAGE_TYPE + word.getRecord_id() + Constants.IMAGE_ENDPOINT);
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Picasso.with(mCtx).invalidate(Constants.IMAGE_TYPE + word.getRecord_id() + Constants.IMAGE_ENDPOINT);
+                    }
+                });
 
 
                 try {

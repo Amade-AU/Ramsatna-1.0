@@ -138,7 +138,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
                     public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
                         new Populate().execute();
                     }
-                }).execute();
+                }, getActivity()).execute();
             } else {
                 Toast.makeText(getContext(), "No Data Found. Please connect to the internet and restart.", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
@@ -348,7 +348,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
                             public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
                                 new Populate().execute();
                             }
-                        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }, getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     } else {
 
                         if (!version.equals(apiVersion) && isConnectedToInternet()) {
@@ -370,7 +370,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
                                     editor.commit();
                                     progressDialog.hide();
                                 }
-                            }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }, getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
                     }
 

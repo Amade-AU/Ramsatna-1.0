@@ -9,7 +9,7 @@
             android:gravity="right"/>
     </item>
 
-    <item android:id="@+id/dubai_gov">
+    <item android:id="@+id/dubai_gov_small">
         <bitmap
             android:src="@drawable/dm_logo_smaller"
             android:gravity="left"/>

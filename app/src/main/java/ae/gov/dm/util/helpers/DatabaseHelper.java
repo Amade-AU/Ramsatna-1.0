@@ -105,4 +105,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
         return size;
     }
+
+    public void clearTable(){
+        try {
+            TableUtils.clearTable(getConnectionSource(), WordModel.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

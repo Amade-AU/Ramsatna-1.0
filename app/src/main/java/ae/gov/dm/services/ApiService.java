@@ -22,6 +22,7 @@ import java.util.Scanner;
 
 import ae.gov.dm.R;
 import ae.gov.dm.model.WordModel;
+import ae.gov.dm.util.helpers.DatabaseHelper;
 import ae.gov.dm.util.helpers.FileHelper;
 import ae.gov.dm.views.MainActivity;
 import okhttp3.Call;
@@ -189,6 +190,7 @@ public class ApiService {
         private boolean locked;
         private ReturnData returnData = null;
         private String TAG = "DownloadData";
+        private DatabaseHelper dbHelper;
 
 
         public interface ReturnData {
@@ -213,6 +215,9 @@ public class ApiService {
             ArrayList<WordModel> words_list = new ArrayList<>();
 
             try {
+                dbHelper = new DatabaseHelper(mCtx);
+                dbHelper.clearTable();
+                Log.d(TAG, "Deleting all the contents from the Table");
                 URL url = new URL(DOWNLOAD_FILE_ENDPOINT);
                 FileHelper fileHelper = new FileHelper();
                 words_list = fileHelper.importData(url.openStream(), mCtx);

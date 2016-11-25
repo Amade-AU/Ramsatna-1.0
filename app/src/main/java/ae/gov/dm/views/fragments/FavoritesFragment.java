@@ -50,13 +50,17 @@ public class FavoritesFragment extends Fragment {
     public void fetchData() {
         try {
 
+            mWords = new ArrayList<>();
             Dao<Favorites, Integer> favoritesDao = getHelper().getFavoritesDao();
             Dao<WordModel, Integer> wordDao = getHelper().getWordsDao();
 
             mFavorites = favoritesDao.queryForAll();
 
             for (int i = 0; i < mFavorites.size(); i++) {
-                mWords.add(wordDao.queryForId(Integer.parseInt(mFavorites.get(i).getRecord_id())));
+                WordModel word = wordDao.queryForId(Integer.parseInt(mFavorites.get(i).getRecord_id()));
+                if(word != null){
+                    mWords.add(word);
+                }
             }
 
             words = new String[mWords.size()];
@@ -77,7 +81,6 @@ public class FavoritesFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mFavorites = new ArrayList<>();
-        mWords = new ArrayList<>();
         adaptor = new ArrayAdapter<>(getActivity(), R.layout.listview_text);
 
 
@@ -119,9 +122,18 @@ public class FavoritesFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        mWords.clear();
+
+        if(mWords != null) {
+            mWords.clear();
+        }
+
         fetchData();
         mFavList.setAdapter(adaptor);
         adaptor.notifyDataSetChanged();

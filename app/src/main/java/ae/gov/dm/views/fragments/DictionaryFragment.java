@@ -11,7 +11,9 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -21,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -63,6 +66,7 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
     private Button mAddbutton;
     private LinearLayout empty_view;
     private ProgressDialog progressDialog;
+    Snackbar snackbar;
 
 
     public DictionaryFragment() {
@@ -336,39 +340,61 @@ public class DictionaryFragment extends Fragment implements ApiService.DownloadD
                 try {
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     String version = sp.getString("version", "");
+                    boolean isDownloading = sp.getBoolean("isDownloading" , false);
                     final String apiVersion = databaseVersion;
+
+
                     progressDialog = new ProgressDialog(getActivity());
 
-                    if (version == null) {
-                        SharedPreferences.Editor editor = sp.edit();
+                    if (version == null && !isDownloading) {
+                       final  SharedPreferences.Editor editor = sp.edit();
                         editor.putString("version", apiVersion);
+                        editor.putBoolean("isDownloading", true);
                         editor.commit();
                         new ApiService.DownloadData(new ApiService.DownloadData.ReturnData() {
                             @Override
                             public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
                                 new Populate().execute();
+                                editor.putBoolean("isDownloading", false);
+                                editor.commit();
                             }
                         }, getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     } else {
 
-                        if (!version.equals(apiVersion) && isConnectedToInternet()) {
+                        if (!version.equals(apiVersion) && isConnectedToInternet() && !isDownloading) {
                             final SharedPreferences.Editor editor = sp.edit();
                             editor.clear();
+                            editor.putBoolean("isDownloading", true);
+                            editor.commit();
                             Toast.makeText(getContext(), R.string.new_version_available_text, Toast.LENGTH_LONG).show();
 
-                            progressDialog.setTitle("تحديث");
+                            snackbar = Snackbar.make(mAddbutton, getResources().getString(R.string.new_version_available_text), Snackbar.LENGTH_INDEFINITE);
+                            snackbar.show();
+                            snackbar.getView().getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                                @Override
+                                public boolean onPreDraw() {
+                                    snackbar.getView().getViewTreeObserver().removeOnPreDrawListener(this);
+                                    ((CoordinatorLayout.LayoutParams) snackbar.getView().getLayoutParams()).setBehavior(null);
+                                    return true;
+                                }
+                            });
+
+
+                         /*   progressDialog.setTitle("تحديث");
                             progressDialog.setMessage(getResources().getString(R.string.new_version_available_text));
                             progressDialog.setCancelable(false);
                             progressDialog.setIndeterminate(true);
-                            progressDialog.show();
+                            progressDialog.show(); */
 
                             new ApiService.DownloadData(new ApiService.DownloadData.ReturnData() {
                                 @Override
                                 public void handleReturnData(ArrayList<WordModel> words_list, boolean locked) {
                                     new Populate().execute();
                                     editor.putString("version", apiVersion);
+                                    editor.putBoolean("isDownloading", false);
                                     editor.commit();
-                                    progressDialog.hide();
+                                    snackbar.dismiss();
+                                    //progressDialog.hide();
                                 }
                             }, getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
